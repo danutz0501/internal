@@ -28,7 +28,8 @@ class Router
 
     private function __construct(protected readonly object $request = new Request(),
                                 protected RouteCollection $get = new RouteCollection(),
-                                protected RouteCollection $post = new RouteCollection()
+                                protected RouteCollection $post = new RouteCollection(),
+                                protected string $method = '', protected array $args = []
     )
     {}
 
@@ -37,24 +38,41 @@ class Router
         $this->{strtolower($verb)}->addElement(new Route($route, $method));
     }
 
-    public function addAttributesController() : void
+    public function addAttributesController(array $controllerArray) : void
     {
-
+        foreach ($controllerArray as $controller)
+        {
+            preg_replace('/\\\\/', '\\', $controller);
+            echo $controller;
+            $reflectionController = new \ReflectionClass($controller);
+            foreach ($reflectionController->getMethods() as $method)
+            {
+                $attributes = $method->getAttributes(RouteAttribute::class);
+                foreach ($attributes as $attribute)
+                {
+                    $route = $attribute->newInstance();
+                    var_dump($this->get);
+                }
+            }
+        }
     }
 
     public function run() : mixed
     {
         if (count($this->{strtolower($this->request->getRequestMethod())}) === 0)
         {
-            throw new \InvalidArgumentException('404 - Page not found.');
+            throw new \InvalidArgumentException('404 - Page not found.1');
         }
         foreach ($this->{strtolower($this->request->getRequestMethod())} as $key => $value)
         {
-            if($value->match($this->request->getCleanUri()))
+            if($value->verify($this->request->getCleanUri()))
             {
+                $this->method = $value->getMethod();
+                $this->args   = $value->getArgs();
+                echo 'merge din run';
                 return true;
             }
         }
-        throw new \HttpRequestException('404 - Page not found.');
+        throw new \InvalidArgumentException('404 - Page not found.2');
     }
 }

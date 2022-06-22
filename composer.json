@@ -9,8 +9,5 @@
       "Stream\\"      : "stream",
       "Internal\\"      : "internal"
     }
-  },
-  "scripts": {
-    "post-install-cmd": "scripts/compileTwbs.php"
   }
 }

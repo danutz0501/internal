@@ -27,7 +27,7 @@ class Route
         ':alphanumeric' => '(\w+)'
     ];
 
-    public function __construct(private readonly mixed $regexToCompile, private readonly string $method,
+    public function __construct(private readonly string $regexToCompile, private readonly string $method,
                                 private string $regex = '', private array $args = [])
     {
         $this->compileRegex($this->regexToCompile);
@@ -44,8 +44,8 @@ class Route
     }
     private function compileRegex() : void
     {
-        $this->regex = "/^".str_replace("/", "\/",$this->regex)."$/i";
-        $this->regex = str_replace(array_keys($this->patterns), array_values($this->patterns));
+        $this->regex = "/^".str_replace("/", "\/",$this->regexToCompile)."$/i";
+        $this->regex = str_replace(array_keys($this->patterns), array_values($this->patterns), $this->regex);
     }
 
     public function getMethod() : string

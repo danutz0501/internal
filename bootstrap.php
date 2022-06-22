@@ -39,6 +39,9 @@ try
     if(file_exists(COMPOSER_PATH.'autoload.php') && is_readable(COMPOSER_PATH.'autoload.php'))
     {
         require_once COMPOSER_PATH.'autoload.php';
+        $router = \GamerHelpDesk\Http\Router\Router::init();
+        $router->addAttributesController(['Stream\\Stream']);
+        $router->run();
     }
     else
     {
