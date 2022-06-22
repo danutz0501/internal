@@ -44,7 +44,7 @@ class Route
     }
     private function compileRegex() : void
     {
-        $this->regex = "/^".str_replace("/", "\/".$this->regex)."$/i";
+        $this->regex = "/^".str_replace("/", "\/",$this->regex)."$/i";
         $this->regex = str_replace(array_keys($this->patterns), array_values($this->patterns));
     }
 
