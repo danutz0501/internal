@@ -1,0 +1,51 @@
+<?php
+/**
+ * Copyright (C) 2022  M. Dumitru Daniel (aka danutz0501)
+ * This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU Affero General Public License as published
+ *   by the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Affero General Public License for more details.
+ *    You should have received a copy of the GNU Affero General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *  bootstrap.php   June / 2022
+ */
+declare(strict_types=1);
+
+$development = true;
+
+if($development === true)
+{
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+    ini_set('xdebug.var_display_max_depth','15');
+    ini_set('xdebug.var_display_max_children','256');
+    ini_set('xdebug.var_display_max_data','1024');
+}
+
+date_default_timezone_set("Europe/Bucharest");
+mb_internal_encoding("UTF-8");
+
+define("BASE_PATH", realpath(__DIR__).DIRECTORY_SEPARATOR);
+const COMPOSER_PATH = BASE_PATH."vendor".DIRECTORY_SEPARATOR;
+
+try
+{
+    if(file_exists(COMPOSER_PATH.'autoload.php') && is_readable(COMPOSER_PATH.'autoload.php'))
+    {
+        require_once COMPOSER_PATH.'autoload.php';
+    }
+    else
+    {
+        throw new InvalidArgumentException("Composer autoloader not found or cannot be loaded.");
+    }
+}
+catch (Throwable $exception)
+{
+    echo $exception->getMessage();
+}
