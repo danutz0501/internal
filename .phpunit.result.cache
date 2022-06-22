@@ -1,1 +1,1 @@
-{"version":1,"defects":{"RegistryTest::testItCanStoreAndretriveValues":4,"RegistryTest::testExceptionOnReadingNotStored":3},"times":{"Test::testBehavior":0.015,"RegistryTest::testItCanStoreAndretriveValues":0.001,"RegistryTest::testExceptionOnReadingNotStored":0.006}}
+{"version":1,"defects":{"RegistryTest::testItCanStoreAndretriveValues":4,"RegistryTest::testExceptionOnReadingNotStored":3},"times":{"Test::testBehavior":0.011,"RegistryTest::testItCanStoreAndretriveValues":0.002,"RegistryTest::testExceptionOnReadingNotStored":0.003}}
