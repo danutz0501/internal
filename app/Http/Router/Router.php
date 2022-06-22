@@ -18,7 +18,43 @@
 declare(strict_types=1);
 namespace GamerHelpDesk\Http\Router;
 
+use GamerHelpDesk\Http\Helper\SingletonTrait;
+use GamerHelpDesk\Http\Request\Request;
+
 class Router
 {
 
+    use SingletonTrait;
+
+    private function __construct(protected readonly object $request = new Request(),
+                                protected RouteCollection $get = new RouteCollection(),
+                                protected RouteCollection $post = new RouteCollection()
+    )
+    {}
+
+    public function addNamedRoute(string $verb, string $route, string $method) : void
+    {
+        $this->{strtolower($verb)}->addElement(new Route($route, $method));
+    }
+
+    public function addAttributesController() : void
+    {
+
+    }
+
+    public function run() : mixed
+    {
+        if (count($this->{strtolower($this->request->getRequestMethod())}) === 0)
+        {
+            throw new \InvalidArgumentException('404 - Page not found.');
+        }
+        foreach ($this->{strtolower($this->request->getRequestMethod())} as $key => $value)
+        {
+            if($value->match($this->request->getCleanUri()))
+            {
+                return true;
+            }
+        }
+        throw new \HttpRequestException('404 - Page not found.');
+    }
 }
