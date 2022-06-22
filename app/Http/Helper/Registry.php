@@ -33,7 +33,7 @@ class Registry extends Collection
 
     public function get($key) : mixed
     {
-        if(!in_array($key, $this->collection))
+        if(!array_key_exists($key, $this->collection))
             throw new \InvalidArgumentException('Http Registry key is not set');
         return $this->collection[$key];
     }
