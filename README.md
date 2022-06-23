@@ -11,11 +11,11 @@
 - some database abstraction layer;
 - image processing library or build a tiny one;
 - some fs(filesystem) capabilities;
-- controllers, models and stuff for website(this is going to be never finished, I'll always add some more stuff);
+- controllers, models and stuff for website(this is an ongoing project, I'll always add some more stuff);
 - front end stuff(js, css, layout etc);
 - file upload(tied to fs and js);
 - and more;
 
 
-** And again this is not intended to be used in production(it's just for in house use)
+## And again this is not intended to be used in production(it's just for in house use)
 
