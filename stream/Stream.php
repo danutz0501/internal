@@ -18,7 +18,6 @@
 declare(strict_types=1);
 namespace Stream;
 
-use GamerHelpDesk\Http\Router\Route;
 use GamerHelpDesk\Http\Router\RouteAttribute;
 use GamerHelpDesk\Http\Router\Router;
 

@@ -51,6 +51,16 @@ class Request
 
     /**
      * @return string
+     * Get the raw body of a request
+     * Some filtering, parsing, decoding etc. is needed for use
+     */
+    public function rawBody() : string
+    {
+        return file_get_contents(filename: 'php://input');
+    }
+
+    /**
+     * @return string
      * Return $this->rawUri basically $_SERVER['REQUEST_URI'] value
      */
     public function getRawUri() : string
