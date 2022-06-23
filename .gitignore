@@ -1,5 +1,5 @@
 vendor
-composser.lock
+composer.lock
 .idea
 .phpunit.result.cache
 node_modules
