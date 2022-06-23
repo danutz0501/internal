@@ -19,6 +19,9 @@ declare(strict_types=1);
 
 namespace GamerHelpDesk\Http\Helper;
 
+/**
+ * Just a trait for adding singleton
+ */
 trait SingletonTrait
 {
     private static self|null $instance = null;

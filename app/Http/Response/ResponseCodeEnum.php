@@ -19,8 +19,15 @@ declare(strict_types=1);
 
 namespace GamerHelpDesk\Http\Response;
 
+/**
+ * Some "generic" often used HTTP response status codes
+ */
 enum ResponseCodeEnum : int
 {
+
+    /**
+     * Codes
+     */
     case CONTINUE              = 100;
     case OK                    = 200;
     case MOVED_PERMANENTLY     = 301;
@@ -31,6 +38,11 @@ enum ResponseCodeEnum : int
     case INTERNAL_SERVER_ERROR = 500;
     case SERVICE_UNAVAILABLE   = 503;
 
+    /**
+     * @param ResponseCodeEnum $param
+     * @return string
+     * Messages
+     */
     public static function getLabel(ResponseCodeEnum $param) : string
     {
         return match ($param)

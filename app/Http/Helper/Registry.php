@@ -19,6 +19,9 @@ declare(strict_types=1);
 
 namespace GamerHelpDesk\Http\Helper;
 
+/**
+ * A registry class implementation, just a disguised global like variable class
+ */
 class Registry extends Collection
 {
 
@@ -26,11 +29,23 @@ class Registry extends Collection
 
     private function __construct(){}
 
+    /**
+     * @param $key
+     * @param $value
+     * @return void
+     * Storing items
+     */
     public function add($key, $value) : void
     {
         $this->collection[$key] = $value;
     }
 
+    /**
+     * @param $key
+     * @return mixed
+     * Retrieving items, using array_key_exists because in_array doesn't work with array object from ArrayIterator,
+     * we're using collection witch is an ArrayIterator instance
+     */
     public function get($key) : mixed
     {
         if(!array_key_exists($key, $this->collection))

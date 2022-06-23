@@ -20,13 +20,45 @@ namespace Stream;
 
 use GamerHelpDesk\Http\Router\Route;
 use GamerHelpDesk\Http\Router\RouteAttribute;
+use GamerHelpDesk\Http\Router\Router;
 
 class Stream
 {
 
-    #[RouteAttribute('get', '/stream/home', __METHOD__)]
+    #[RouteAttribute(verb: 'get', regexToCompile: '/stream/home', method: __METHOD__)]
     public function home()
     {
         echo 'merge din stream home';
+    }
+
+    #[RouteAttribute(verb: 'get', regexToCompile: '/stream/start', method: __METHOD__)]
+    public function start() : void
+    {
+        echo "Start stream";
+    }
+
+    #[RouteAttribute(verb: 'get', regexToCompile: '/stream/end', method: __METHOD__)]
+    public function end() : void
+    {
+        echo "End stream";
+    }
+
+    #[RouteAttribute(verb: 'get', regexToCompile: '/stream/add-image', method: __METHOD__)]
+    public function addImage() : void
+    {
+        echo "add an image";
+    }
+
+    #[RouteAttribute(verb: 'get', regexToCompile: '/stream/add-video', method: __METHOD__)]
+    public function addVideo() : void
+    {
+        echo "add a video";
+    }
+
+    public function postImage() : void
+    {
+        if(!Router::init()->getRequest()->isAjax())
+            throw new \BadMethodCallException(message: 'Upload the image using ajax.');
+        echo "uploading a image";
     }
 }

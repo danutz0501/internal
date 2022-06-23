@@ -20,6 +20,9 @@ namespace GamerHelpDesk\Http\Router;
 
 use GamerHelpDesk\Http\Helper\Collection;
 
+/**
+ * Simple storage for routes
+ */
 class RouteCollection extends Collection
 {
     public function addElement(Route $route) : void

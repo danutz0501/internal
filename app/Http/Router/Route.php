@@ -18,9 +18,16 @@
 declare(strict_types=1);
 namespace GamerHelpDesk\Http\Router;
 
+/**
+ * An object used in routing
+ */
 class Route
 {
 
+    /**
+     * @var array|string[]
+     * An array of key and values used for matching with regular expressions
+     */
     private array $patterns = [
         ':string' => '([a-z\-]+)',
         ':numeric' => '(\d+)',
@@ -33,6 +40,12 @@ class Route
         $this->compileRegex($this->regexToCompile);
     }
 
+    /**
+     * @param $input
+     * @return bool
+     * Verify/match if the input given is matching the stored route, like:
+     * example.com/user/45/blog-post/bla match with this example.com/user/:digit/blog-post/:alphanumeric
+     */
     public function verify($input) : bool
     {
         if(preg_match($this->regex, $input, $out))
@@ -42,17 +55,32 @@ class Route
         }
         return false;
     }
+
+    /**
+     * @return void
+     * Replacing the tokens used in routes with regular expression
+     * :digit with /^(\d+)$/i
+     */
     private function compileRegex() : void
     {
         $this->regex = "/^".str_replace("/", "\/",$this->regexToCompile)."$/i";
         $this->regex = str_replace(array_keys($this->patterns), array_values($this->patterns), $this->regex);
     }
 
+    /**
+     * @return string
+     * returns the method for the route
+     */
     public function getMethod() : string
     {
         return $this->method;
     }
 
+    /**
+     * @return array
+     * Returns an array, first element is the entire match, subsequently elements of the array are the match parts
+     * array[0] - is the whole match expression, array[1], array[2] etc are the match parts used for arguments in methods/function calls
+     */
     public function getArgs() : array
     {
         return $this->args;

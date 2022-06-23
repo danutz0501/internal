@@ -21,16 +21,27 @@ namespace GamerHelpDesk\Http\Helper;
 use Exception;
 use Traversable;
 
+/**
+ * Generic storage iterable
+ */
 class Collection implements \IteratorAggregate, \Countable
 {
 
     public function __construct(protected array $collection=[]){}
 
+    /**
+     * @return \ArrayIterator
+     * Implementing ArrayIterator interface
+     */
     public function getIterator(): \ArrayIterator
     {
         return new \ArrayIterator($this->collection);
     }
 
+    /**
+     * @return int
+     * Implementing Countable interface
+     */
     public function count(): int
     {
         return count($this->collection);

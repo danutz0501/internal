@@ -13,27 +13,12 @@
  *    You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- *  RouteAttribute.php   June / 2022
+ *  SessionIniEnum.php   June / 2022
  */
 declare(strict_types=1);
-namespace GamerHelpDesk\Http\Router;
-#[\Attribute]
-/**
- * Class used for attributes routing
- */
-class RouteAttribute extends Route
+namespace GamerHelpDesk\Http\Session;
+
+enum SessionIniEnum : string
 {
 
-    /**
-     * @param string $verb
-     * @param string $regexToCompile
-     * @param string $method
-     * Just a class used for attribute routing, it's just a wrapper for the route class used for name routing
-     */
-    public function __construct(protected readonly string $verb, protected readonly string $regexToCompile, protected readonly string $method)
-    {
-        $router = Router::init();
-        $router->addNamedRoute($this->verb, $this->regexToCompile, $this->method);
-    }
 }
-

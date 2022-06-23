@@ -18,9 +18,21 @@
 declare(strict_types=1);
 namespace GamerHelpDesk\Http\Request;
 
+/**
+ * Basic HTTP request class
+ */
 class Request
 {
+
+    /**
+     * HTTP verbs constant
+     */
     const HTTP_VERBS = 'GET|POST';
+
+    /**
+     * @var string|mixed
+     * The raw $_SERVER['REQUEST_URI'] value
+     */
     protected readonly string $rawUri;
 
     public function __construct()
@@ -28,21 +40,38 @@ class Request
         $this->rawUri = $_SERVER['REQUEST_URI'];
     }
 
+    /**
+     * @return bool
+     * Check if a call is ajax, check for headers HTTP_X_REQUEST_WITH (javascript)
+     */
     public function isAjax() : bool
     {
         return isset($_SERVER['HTTP_X_REQUEST_WITH']) && strtolower($_SERVER['HTTP_X_REQUEST_WITH']) === "xmlhttprequest";
     }
 
+    /**
+     * @return string
+     * Return $this->rawUri basically $_SERVER['REQUEST_URI'] value
+     */
     public function getRawUri() : string
     {
         return $this->rawUri;
     }
 
+    /**
+     * @return string
+     * Doing some cleaning with some regex function on $_SERVER['REQUEST_URI'] value, allowing only a-z(case insensitive)
+     * digits slash / and hyphen - and using some php built in filters
+     */
     public function getCleanUri() : string
     {
         return preg_replace('/[^\da-z\-\/]/i', '', filter_var($this->getRawUri(), FILTER_SANITIZE_URL));
     }
 
+    /**
+     * @return string
+     * Trying to get the HTTP method/verb used and making it lower case, either get or post
+     */
     public function getRequestMethod() : string
     {
         return $method = isset($_SERVER['REQUEST_METHOD']) && !empty($_SERVER['REQUEST_METHOD']) && preg_match('/'.self::HTTP_VERBS.'/', strtoupper($_SERVER['REQUEST_METHOD'])) ? strtoupper($_SERVER['REQUEST_METHOD']) : 'GET';
