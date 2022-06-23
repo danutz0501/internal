@@ -17,16 +17,11 @@
  */
 declare(strict_types=1);
 
-$development = true;
-
-if($development === true)
-{
-    error_reporting(E_ALL);
-    ini_set('display_errors', 1);
-    ini_set('xdebug.var_display_max_depth','15');
-    ini_set('xdebug.var_display_max_children','256');
-    ini_set('xdebug.var_display_max_data','1024');
-}
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('xdebug.var_display_max_depth','15');
+ini_set('xdebug.var_display_max_children','256');
+ini_set('xdebug.var_display_max_data','1024');
 
 date_default_timezone_set("Europe/Bucharest");
 mb_internal_encoding("UTF-8");
@@ -46,7 +41,7 @@ try
     }
     else
     {
-        throw new InvalidArgumentException("Composer autoloader not found or cannot be loaded.");
+        throw new InvalidArgumentException(message: "Composer autoloader not found or cannot be loaded.", code: 0);
     }
 }
 catch (Throwable $exception)
