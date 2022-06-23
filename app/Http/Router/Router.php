@@ -26,10 +26,10 @@ class Router
 
     use SingletonTrait;
 
-    private function __construct(protected readonly object $request = new Request(),
-                                protected RouteCollection $get = new RouteCollection(),
-                                protected RouteCollection $post = new RouteCollection(),
-                                protected string $method = '', protected array $args = []
+    private function __construct(protected readonly Request $request      = new Request(),
+                                 protected readonly RouteCollection $get  = new RouteCollection(),
+                                 protected readonly RouteCollection $post = new RouteCollection(),
+                                 protected string $method = '', protected array $args = [],
     )
     {}
 
@@ -43,7 +43,6 @@ class Router
         foreach ($controllerArray as $controller)
         {
             preg_replace('/\\\\/', '\\', $controller);
-            echo $controller;
             $reflectionController = new \ReflectionClass($controller);
             foreach ($reflectionController->getMethods() as $method)
             {
@@ -51,7 +50,6 @@ class Router
                 foreach ($attributes as $attribute)
                 {
                     $route = $attribute->newInstance();
-                    var_dump($this->get);
                 }
             }
         }
@@ -61,7 +59,7 @@ class Router
     {
         if (count($this->{strtolower($this->request->getRequestMethod())}) === 0)
         {
-            throw new \InvalidArgumentException('404 - Page not found.1');
+            throw new \InvalidArgumentException(message : '404 - Page not found.', code : 404);
         }
         foreach ($this->{strtolower($this->request->getRequestMethod())} as $key => $value)
         {
@@ -69,10 +67,25 @@ class Router
             {
                 $this->method = $value->getMethod();
                 $this->args   = $value->getArgs();
-                echo 'merge din run';
+                $temp = $this->prepareCallBack();
+                call_user_func_array([new $temp[0], $temp[1]],$this->args);
                 return true;
             }
         }
-        throw new \InvalidArgumentException('404 - Page not found.2');
+        throw new \InvalidArgumentException(message : '404 - Page not found.', code : 404);
+    }
+
+    private function prepareCallBack() : array
+    {
+        if(str_contains(haystack: $this->method, needle: '::'))
+            return explode(separator: '::', string: $this->method);
+        else
+        {
+            $temp = explode(separator: '\\', string: $this->method);
+            $method = array_pop($temp);
+            $class  = implode(separator: '\\', array: $temp);
+            return [$class, $method];
+        }
+
     }
 }

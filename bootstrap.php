@@ -41,6 +41,7 @@ try
         require_once COMPOSER_PATH.'autoload.php';
         $router = \GamerHelpDesk\Http\Router\Router::init();
         $router->addAttributesController(['Stream\\Stream']);
+        $router->addNamedRoute(verb: 'get', route: '/', method: 'Internal\\Home\\index');
         $router->run();
     }
     else

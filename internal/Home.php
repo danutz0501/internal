@@ -13,20 +13,15 @@
  *    You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- *  Stream.php   June / 2022
+ *  Home.php   June / 2022
  */
 declare(strict_types=1);
-namespace Stream;
+namespace Internal;
 
-use GamerHelpDesk\Http\Router\Route;
-use GamerHelpDesk\Http\Router\RouteAttribute;
-
-class Stream
+class Home
 {
-
-    #[RouteAttribute('get', '/stream/home', __METHOD__)]
-    public function home()
+    public function index() : void
     {
-        echo 'merge din stream home';
+        echo 'echo din home index';
     }
 }
