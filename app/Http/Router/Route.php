@@ -31,7 +31,7 @@ class Route
     private array $patterns = [
         ':string'       => '([a-z\-]+)',
         ':numeric'      => '(\d+)',
-        ':alphanumeric' => '(\w+)',
+        ':alphanumeric' => '(\w+\-)',
         '{'             => '(',
         '}'             => ')',
         '#'             => '?<',
