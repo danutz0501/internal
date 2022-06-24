@@ -109,7 +109,7 @@ class Router
                     throw new GamerHelpDeskException(case: GamerHelpDeskExceptionEnum::InvalidArgumentException,
                                                     customMessage: "Class/method used for this route does not exist or is set to protected/private");
                 }
-                call_user_func_array([new $temp[0], $temp[1]],$this->args);
+                call_user_func_array([new $temp[0], $temp[1]],[$this->args]);
                 return true;
             }
         }
@@ -173,10 +173,8 @@ class Router
                 return true;
             }
         }
-        catch (ReflectionException $exception)
-        {
-            echo $exception->getMessage();
-        }
+        catch (ReflectionException)
+        {}
         return false;
     }
 }

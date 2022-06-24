@@ -29,9 +29,13 @@ class Route
      * An array of key and values used for matching with regular expressions
      */
     private array $patterns = [
-        ':string' => '([a-z\-]+)',
-        ':numeric' => '(\d+)',
-        ':alphanumeric' => '(\w+)'
+        ':string'       => '([a-z\-]+)',
+        ':numeric'      => '(\d+)',
+        ':alphanumeric' => '(\w+)',
+        '{'             => '(',
+        '}'             => ')',
+        '#'             => '?<',
+        ' '             => '>',
     ];
 
     public function __construct(private readonly string $regexToCompile, private readonly string $method,

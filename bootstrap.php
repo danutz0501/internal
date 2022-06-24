@@ -37,6 +37,13 @@ try
         $router = \GamerHelpDesk\Http\Router\Router::init();
         $router->addAttributesController(['Stream\\Stream']);
         $router->addNamedRoute(verb: 'get', route: '/', method: 'Internal\\Home\\index');
+        $router->addNamedRoute(verb: 'get', route: '/notes', method: 'Internal\\Home\\notes');
+        /**
+         * Added {#note :numeric} for regexp capture, the array for calling the function is an associative array.
+         * The array pushed to the method looks like this ['note' => '45']
+         * {#name for var a space :numeric}
+         */
+        $router->addNamedRoute(verb: 'get', route: '/notes/{#note :numeric}', method: 'Internal\\Home\\readNote');
         $router->run();
     }
     else

@@ -24,4 +24,15 @@ class Home
     {
         echo 'echo din home index';
     }
+
+    public function notes() : void
+    {
+        echo "notes";
+    }
+
+    public function readNote(array $note) : void
+    {
+
+        echo "Reading note : ".$note['note'];
+    }
 }
