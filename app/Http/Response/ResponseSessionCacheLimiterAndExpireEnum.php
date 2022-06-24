@@ -65,13 +65,13 @@ enum ResponseSessionCacheLimiterAndExpireEnum : string
     }
 
     /**
-     * @param string|null $value
+     * @param ResponseSessionCacheLimiterAndExpireEnum|null $value
      * @return string|false
      * wrapper for session_cache_limiter, which is used to control which cache control HTTP are sent to the client, not for session
      * BUT YOU MUST CALL IT BEFORE session_start(), use enum cases
      * @url https://www.php.net/manual/en/function.session-cache-limiter.php
      */
-    public static function session_cache_limiter(?string $value = null) : string|false
+    public static function session_cache_limiter(?string$value = null) : string|false
     {
         return session_cache_limiter($value);
     }

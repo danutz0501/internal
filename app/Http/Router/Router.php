@@ -18,8 +18,12 @@
 declare(strict_types=1);
 namespace GamerHelpDesk\Http\Router;
 
+use GamerHelpDesk\Exception\GamerHelpDeskException;
+use GamerHelpDesk\Exception\GamerHelpDeskExceptionEnum;
 use GamerHelpDesk\Http\Helper\SingletonTrait;
 use GamerHelpDesk\Http\Request\Request;
+use ReflectionClass;
+use ReflectionException;
 
 /**
  * Simple class for routing
@@ -55,13 +59,13 @@ class Router
      */
     public function addNamedRoute(string $verb, string $route, string $method) : void
     {
-        $this->{strtolower($verb)}->addElement(new Route($route, $method));
+        $this->{strtolower($verb)}->addElement(new Route($route, ltrim($method, "\\")));
     }
 
     /**
      * @param array $controllerArray
      * @return void
-     * @throws \ReflectionException
+     * @throws ReflectionException
      * Really basic attribute routing, we need to use Reflexion to get Attributes from methods
      * and a lot of foreach
      */
@@ -70,7 +74,7 @@ class Router
         foreach ($controllerArray as $controller)
         {
             preg_replace('/\\\\/', '\\', $controller);
-            $reflectionController = new \ReflectionClass($controller);
+            $reflectionController = new ReflectionClass($controller);
             foreach ($reflectionController->getMethods() as $method)
             {
                 $attributes = $method->getAttributes(RouteAttribute::class);
@@ -85,12 +89,13 @@ class Router
     /**
      * @return mixed
      * just routing
+     * @throws GamerHelpDeskException
      */
-    public function run() : mixed
+    public function run() : bool
     {
         if (count($this->{strtolower($this->request->getRequestMethod())}) === 0)
         {
-            throw new \InvalidArgumentException(message : '404 - Page not found.', code : 404);
+            throw new GamerHelpDeskException(GamerHelpDeskExceptionEnum::RouteNotFoundException);
         }
         foreach ($this->{strtolower($this->request->getRequestMethod())} as $key => $value)
         {
@@ -99,11 +104,16 @@ class Router
                 $this->method = $value->getMethod();
                 $this->args   = $value->getArgs();
                 $temp = $this->prepareCallBack();
+                if(!$this->checkMethod($temp))
+                {
+                    throw new GamerHelpDeskException(case: GamerHelpDeskExceptionEnum::InvalidArgumentException,
+                                                    customMessage: "Class/method used for this route does not exist or is set to protected/private");
+                }
                 call_user_func_array([new $temp[0], $temp[1]],$this->args);
                 return true;
             }
         }
-        throw new \InvalidArgumentException(message : '404 - Page not found.', code : 404);
+        throw new GamerHelpDeskException(GamerHelpDeskExceptionEnum::RouteNotFoundException);
     }
 
     /**
@@ -143,5 +153,30 @@ class Router
             return [$class, $method];
         }
 
+    }
+
+    /**
+     * Just a function to check if the method exist and is public
+     * Short tldr is_callable doesn't see a normal method if the object is not instantiate, only static methods
+     * method_exists doesn't care about access modifiers protected/private,
+     * so this just a function to check if the method exists no matter if is normal or static and is public
+     * @param array $classAndMethodArray
+     * @return bool
+     */
+    private function checkMethod(array $classAndMethodArray) : bool
+    {
+        try
+        {
+            $reflection = new ReflectionClass("\\".$classAndMethodArray[0]);
+            if($reflection->getMethod(name: $classAndMethodArray[1])->isPublic())
+            {
+                return true;
+            }
+        }
+        catch (ReflectionException $exception)
+        {
+            echo $exception->getMessage();
+        }
+        return false;
     }
 }
