@@ -65,7 +65,7 @@ enum ResponseSessionCacheLimiterAndExpireEnum : string
     }
 
     /**
-     * @param ResponseSessionCacheLimiterAndExpireEnum|null $value
+     * @param string|null $value
      * @return string|false
      * wrapper for session_cache_limiter, which is used to control which cache control HTTP are sent to the client, not for session
      * BUT YOU MUST CALL IT BEFORE session_start(), use enum cases
