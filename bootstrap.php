@@ -27,7 +27,9 @@ date_default_timezone_set("Europe/Bucharest");
 mb_internal_encoding("UTF-8");
 
 define("BASE_PATH", realpath(__DIR__).DIRECTORY_SEPARATOR);
-const COMPOSER_PATH = BASE_PATH."vendor".DIRECTORY_SEPARATOR;
+const COMPOSER_PATH      = BASE_PATH."vendor".DIRECTORY_SEPARATOR;
+const PYTHON_PATH        = BASE_PATH."python".DIRECTORY_SEPARATOR;
+const CONFIGURATION_PATH = BASE_PATH."config".DIRECTORY_SEPARATOR;
 
 try
 {

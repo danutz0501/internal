@@ -13,12 +13,10 @@
  *    You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- *  view.php   June / 2022
+ *  python.php   June / 2022
  */
 declare(strict_types=1);
-namespace View;
 
-class View
-{
+return [
 
-}
+];
