@@ -20,5 +20,13 @@ namespace View;
 
 class View
 {
+    public function streamHome() : void
+    {
 
+    }
+
+    public function internalHome() : void
+    {
+
+    }
 }
