@@ -18,11 +18,14 @@
 declare(strict_types=1);
 namespace Internal;
 
+use View\View;
+
 class Home
 {
     public function index() : void
     {
-        echo 'echo din home index';
+        $mata = new View();
+        $mata->internalHome();
     }
 
     public function notes() : void

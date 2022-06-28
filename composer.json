@@ -8,7 +8,7 @@
       "GamerHelpDesk\\" : "app",
       "Stream\\"      : "stream",
       "Internal\\"      : "internal",
-      "View\\"          : "view"
+      "View\\"          : "app/View"
     }
   },
   "require-dev": {

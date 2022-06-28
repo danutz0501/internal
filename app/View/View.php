@@ -27,6 +27,6 @@ class View
 
     public function internalHome() : void
     {
-
+        include (VIEW_PATH."internalHome.html");
     }
 }

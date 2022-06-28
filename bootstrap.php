@@ -30,6 +30,8 @@ define("BASE_PATH", realpath(__DIR__).DIRECTORY_SEPARATOR);
 const COMPOSER_PATH      = BASE_PATH."vendor".DIRECTORY_SEPARATOR;
 const PYTHON_PATH        = BASE_PATH."python".DIRECTORY_SEPARATOR;
 const CONFIGURATION_PATH = BASE_PATH."config".DIRECTORY_SEPARATOR;
+const VIEW_PATH          = BASE_PATH."app/View/views/";
+
 
 try
 {
